@@ -1,15 +1,15 @@
 #include<iostream>
-#define size 100
+
 using namespace std;
 struct student
 {
 	int roll,marks;
-	bool p;
-}class1[size];
+	string p;
+}class1[100];
 int main()
 {
 	int n,i,j,p,s,highest=0,lowest=20,avg,sum=0;
-	cout<<"Enter the strength of student"<<endl;
+	cout<<"Enter the strength of class"<<endl;
 	cin>>n;
 	cout<<"Enter the student information"<<endl;
 	for(i=0;i<n;i++)
@@ -21,7 +21,8 @@ int main()
 		cout<<"Enter student presenty status"<<endl;
 		cin>>class1[i].p;
 	}
-	cout<<"Enter datail is as follow"<<endl;
+
+	cout<<"Entered datail is as follow"<<endl;
 	cout<<"--------------------------------------------------"<<endl;
 	cout<<"Roll NO.\tMarks\t  Presenty"<<endl;
 	for(i=0;i<n;i++)
@@ -56,7 +57,7 @@ int main()
 	cout<<"The list of student of student who are absent for test are as follow"<<endl;
 	for(i=0;i<n;i++)
 	{
-		if(class1[i].p==false)
+		if(class1[i].p=="absent")
 		{
 			cout<<class1[i].roll<<endl;
 		}
