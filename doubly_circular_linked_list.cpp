@@ -4,6 +4,7 @@ struct node
 {
 	string data;
 	node *next;
+	node *prev;
 }*head,*last;
 int pos=0;
 void display();
@@ -76,7 +77,9 @@ void create(string n)
 			temp->next=NULL;
 			head=last=temp;
 			head->next=head;
+			head->prev=head;
 			last->next=head;
+			last->prev=head;
 			cout<<"Liked list with ("<<temp->data<<") first node is create"<<endl;
 		}
 		else
@@ -116,8 +119,10 @@ void insert_last(string n)
 		temp->data=n;
 		temp->next=NULL;
 		last->next=temp;
+		temp->prev=last;
 		last=temp;
 		last->next=head;
+		head->prev=last;
 		cout<<last->data<<" = element inserted"<<endl;
 	}
 }
@@ -132,8 +137,10 @@ void insert_first(string n)
 		node *temp=new node();
 		temp->data=n;
 		temp->next=head;
+		head->prev=temp;
 		head=temp;
-		last->next=head;	
+		last->next=head;
+		head->prev=last;	
 		cout<<head->data<<" = element inserted"<<endl;
 	}
 }
@@ -153,7 +160,9 @@ void insert_anywhere(string n,int pos)
 			temp1=temp1->next;
 		}
 		temp->next=temp1->next;
+		temp1->next->prev=temp;
 		temp1->next=temp;
+		temp->prev=temp1;
 		cout<<n<<" = element inserted"<<endl;
 	}
 }
@@ -178,6 +187,7 @@ void delete_elt(string n)
 		{
 			temp=head;
 			head=head->next;
+			head->prev=last;
 			last->next=head;
 			cout<<temp->data<<" = element deleted"<<endl;
 			delete(temp);
@@ -188,6 +198,9 @@ void delete_elt(string n)
 			{
 				temp=temp1->next;
 				temp1->next=temp->next;
+				temp1->next->prev=temp1;
+				temp->next=NULL;
+				temp->prev=NULL;
 				cout<<temp->data<<" = element deleted"<<endl;
 				delete(temp);
 			}
@@ -197,8 +210,11 @@ void delete_elt(string n)
 		if(temp1->next->data==n)    
 		{
 		        temp=temp1->next;
-        		temp1->next=last->next;
+        		temp1->next=temp->next;
+        		temp->next->prev=temp1;
        			last = temp1;
+       			temp->next=NULL;
+       			temp->prev=NULL;
        			cout<<temp->data<<" = element deleted"<<endl;
 		        delete(temp);
         	}
