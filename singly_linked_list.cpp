@@ -4,10 +4,8 @@ struct node
 {
 	string data;
 	node *next;
-};
-node *head=new node();
+}*head,*last;
 int pos=0;
-node *last=new node();
 void display();
 void create(string n);
 void insert_last(string n);
@@ -79,132 +77,192 @@ int main()
 }
 void create(string n)
 {	
-		node *temp=new node();
-		temp->data=n;
-		temp->next=NULL;
-		head=last=temp;
-		cout<<"Liked list with "<<temp->data<<" first node is created"<<endl;
+		if(last==NULL)
+		{
+			node *temp=new node();
+			temp->data=n;
+			temp->next=NULL;
+			head=last=temp;
+			cout<<"Liked list with "<<temp->data<<" first node is create"<<endl;
+		}
+		else
+		{
+			cout<<"Linked list is already created"<<endl;
+		}
 }	
 void display()
 {
 	cout<<"-----------------------------------------------"<<endl;
-	node *temp=head;
 	int i=1;
-	while(temp!=NULL)
+	if(head==NULL)
 	{
-		cout<<i<<"> "<<temp->data<<endl;
-		temp=temp->next;
-		i++;
+		cout<<"Linked list is empty, nothing to display here"<<endl;
+	}
+	else
+	{
+		node *temp=head;
+		while(temp!=NULL)
+		{
+			cout<<i<<"> "<<temp->data<<endl;
+			temp=temp->next;
+			i++;
+		}
 	}
 }	
 void insert_last(string n)
 {
-	node *temp=new node();
-	temp->data=n;
-	temp->next=NULL;
-	last->next=temp;
-	last=temp;
-	cout<<last->data<<" = element inserted"<<endl;
-}
-void insert_first(string n)
-{
-	node *temp=new node();
-	temp->data=n;
-	temp->next=head;
-	head=temp;
-	cout<<head->data<<" = element inserted"<<endl;
-}
-void insert_anywhere(string n,int pos)
-{
-	node *temp=new node();
-	node *temp1=head;
-	temp->data=n;
-	for(int i=1;i<pos-1;i++)
+	if(last==NULL)
 	{
-		temp1=temp1->next;
-	}
-	temp->next=temp1->next;
-	temp1->next=temp;
-	cout<<n<<" = element inserted"<<endl;
-}
-void delete_mid(string n)
-{
-	node *temp=head;
-	node *temp1;
-	int i=1;
-	while(temp->next!=NULL)
-	{
-		if(n==temp->data)
-		{
-			pos=i;
-			break;
-		}
-		i++;
-		temp=temp->next;
-	}
-	if(pos==0)
-	{
-		cout<<"Element not found"<<endl;
+		cout<<"Linked list is empty please first create the linked list"<<endl;
 	}
 	else
 	{
-	temp=head;
-	for(i=1;i<pos;i++)
-	{
-		temp1=temp;
-		temp=temp->next;
+		node *temp=new node();
+		temp->data=n;
+		temp->next=NULL;
+		last->next=temp;
+		last=temp;
+		cout<<last->data<<" = element inserted"<<endl;
 	}
-	temp1->next=temp->next;
-	temp->next=NULL;
-	cout<<temp->data<<" = element deleted"<<endl;
-	delete(temp);
+}
+void insert_first(string n)
+{
+	if(head==NULL)
+	{
+		cout<<"Linked list is empty please first create the linked list"<<endl;
+	}
+	else
+	{
+		node *temp=new node();
+		temp->data=n;
+		temp->next=head;
+		head=temp;	
+		cout<<head->data<<" = element inserted"<<endl;
+	}
+}
+void insert_anywhere(string n,int pos)
+{
+	if(head==NULL)
+	{
+		cout<<"Linked list is empty please first create the linked list"<<endl;
+	}
+	else
+	{
+		node *temp=new node();
+		node *temp1=head;
+		temp->data=n;
+		for(int i=1;i<pos-1;i++)
+		{
+			temp1=temp1->next;
+		}
+		temp->next=temp1->next;
+		temp1->next=temp;
+		cout<<n<<" = element inserted"<<endl;
+	}
+}
+void delete_mid(string n)
+{
+	if(head==NULL)
+	{
+		cout<<"Linked list is empty please first create the linked list"<<endl;
+	}
+	else
+	{
+		node *temp=head;
+		node *temp1;
+		int i=1;
+		while(temp->next!=NULL)
+		{
+			if(n==temp->data)
+			{
+				pos=i;
+				break;
+			}
+			i++;
+			temp=temp->next;
+		}
+		if(pos==0)
+		{
+			cout<<"Element not found"<<endl;
+		}
+		else
+		{
+			temp=head;
+			for(i=1;i<pos;i++)
+			{
+				temp1=temp;
+				temp=temp->next;
+			}
+			temp1->next=temp->next;
+			temp->next=NULL;
+			cout<<temp->data<<" = element deleted"<<endl;
+			delete(temp);
+		}
 	}
 }
 void delete_first()
 {
-	node *temp=head;
-	head=head->next;
-	temp->next=NULL;
-	cout<<temp->data<<" = element deleted"<<endl;
-	delete(temp);
-}
-void delete_last()
-{
-	node *temp=head;
-	while(temp->next->next!=NULL)
+	if(head==NULL)
 	{
-		temp=temp->next;
-	}
-	node *temp1=temp->next;
-	temp->next=NULL;
-	last=temp;
-	cout<<temp1->data<<" = element delted"<<endl;
-	delete(temp1);
-	
-}	
-void search(string n)
-{
-	node *temp=head;
-	int i=1;
-	int z;
-	while(temp->next!=NULL)
-	{
-		if(n==temp->data)
-		{
-			pos=i;
-			z=7;
-		}
-		i++;
-		temp=temp->next;
-	}
-	if(z==7)
-	{
-		cout<<n<<" element found at "<<pos<<endl;
+		cout<<"Linked list is empty please first create the linked list"<<endl;
 	}
 	else
 	{
-		cout<<"Element not found"<<endl;
+		node *temp=head;
+		head=head->next;
+		temp->next=NULL;
+		cout<<temp->data<<" = element deleted"<<endl;
+		delete(temp);
 	}
-}		
-		
-	
+}
+void delete_last()
+{
+	if(last==NULL)
+	{
+		cout<<"Linked list is empty please first create the linked list"<<endl;
+	}
+	else
+	{
+		node *temp=head;
+		while(temp->next->next!=NULL)
+		{
+			temp=temp->next;
+		}
+		node *temp1=temp->next;
+		temp->next=NULL;
+		last=temp;
+		cout<<temp1->data<<" = element delted"<<endl;
+		delete(temp1);
+	}	
+}	
+void search(string n)
+{
+	if(head==NULL)
+	{
+		cout<<"Linked list is empty please first create the linked list"<<endl;
+	}
+	else
+	{
+		node *temp=head;
+		int i=1;
+		int z;
+		while(temp->next!=NULL)
+		{
+			if(n==temp->data)
+			{
+				pos=i;
+				z=7;
+			}
+			i++;
+			temp=temp->next;
+		}
+		if(z==7)
+		{
+			cout<<n<<" element found at "<<pos<<endl;
+		}
+		else
+		{
+			cout<<"Element not found"<<endl;
+		}
+	}
+}	
