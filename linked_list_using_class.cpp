@@ -5,7 +5,7 @@ class Node
 {
 public:
     int info;
-    Node* next;
+    Node *next;
 };
 class List:public Node
 {
@@ -211,7 +211,7 @@ int main()
         case 5:
             l.display();
             break;
-        case 6:
+        case 6:cout<<"Exit"<<endl;
             return 0;
         }
     }
