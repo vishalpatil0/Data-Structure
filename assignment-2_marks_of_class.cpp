@@ -65,27 +65,27 @@ void absent(struct student s[20], int n)
 		}
 	}
 }
-void most(struct student s[20], int n)
+void most(struct student s[20], int n,int max_marks)
 {
-	int i,j,c,m;
-	int p=0;
+	int i,j,k,max=-1;
+	int count[max_marks+1];
+	for(i=1;i<=max_marks;i++)
+	{
+		count[i]=0;
+	}
 	for(i=0;i<n;i++)
 	{
-		for(j=0;j<n;j++)
+		count[s[i].marks]++;
+	}
+	for(i=1;i<=max_marks;i++)
+	{
+		if(count[i]>max)
 		{
-			c=0;
-			if(s[i].marks==s[j].marks)
-			{
-				c++;
-				if(p<c)
-				{
-					m=s[i].marks;
-					p=c;
-				}
-			}
+			max=count[i];
+			k=i;
 		}
 	}
-	cout<<"\nMarks scored by most of the student are = "<<m<<endl;
+	cout<<"\nMarks scored by most of the student are = "<<k<<endl;
 }
 int main()
 {
@@ -147,7 +147,7 @@ int main()
 				absent(s,n);
 				break;
 			case 4:
-				most(s,n);
+				most(s,n,max_marks);
 				break;
 			default:
 				cout<<"Invalid choice"<<endl;

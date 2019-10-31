@@ -4,7 +4,7 @@ struct node
 {
 	string data;
 	node *next;
-}*head,*last;
+}*head=NULL,*last=NULL;
 int pos=0;
 void display();
 void create(string n);
