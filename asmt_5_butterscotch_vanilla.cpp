@@ -1,255 +1,273 @@
 #include<iostream>
-#include<string.h>
 using namespace std;
 struct node
-{
-	char name[20];
-	struct node *next;
+{    int roll;
+      struct node *next;
 };
-class Set
-{
-public:
-	struct node *head,*head1,*head2;
-	Set()
-	{
-		head=NULL;
-		head1=NULL;
-		head2=NULL;
-	}
-	struct node* create(struct node *head);
-	void display(struct node *p);
-	struct node *Union(struct node *head1,struct node *head2);
-	void Intersection(struct node *head1, struct node *head2);
-	struct node *difference(struct node *head1, struct node *head2);
-	int count(struct node *p);
-};
+class info
+{        node *head1=NULL,*temp1=NULL,*head2=NULL,*temp2=NULL,*head=NULL,*temp=NULL,*h1=NULL,*head3=NULL,*temp3=NULL;
+        int c,i,f,j,k;
+       
+        public:
+    
+            node  *create();
+            void insert();
+            void allstud();
+            void vanila();
+            void butters();
+            void uice();
+            void nice();
+            void notice();
+            void ovanila();
+            void obutters();
+            void display();   
 
-int Set::count(struct node *p)
-{
-	int cnt=0;
-	while(p!=NULL)
-	{
-		cnt++;
-p=p->next;
-	}
-	return cnt;
+           
+            
+} ;        
+node *info::create()
+{   node *p=new(struct node);
+     cout<<"enter student rollno";
+     cin>>c;
+     p->roll=c;
+     p->next=NULL;
+     return  p;
+  } 
+  void info::insert()
+  { 
+       node *p=create();
+   
+     if(head==NULL)
+     {    head=p;
+     }
+    else
+    {      temp=head;
+          while(temp->next!=NULL)
+          {    temp=temp->next;   }
+              temp->next=p;
+     }        
+         
+   }
+   void info::display()
+   {  temp=head;
+      while(temp->next!=NULL)
+      { cout<<"\n"<<temp->roll;
+        temp=temp->next;
+      } cout<<"\n"<<temp->roll;
+   }
+   void info::allstud()
+   {cout<<"enter no. of students";
+       cin>>k;
+        head=NULL;
+       for(i=0;i<k;i++)
+       {    insert();
+             h1=head;
+          
+       }  display();
+       head=NULL;
+    }
+    void info::vanila()
+    {
+       cout<<"enter no. of  students who like vanila";
+       cin>>k;
+        head=NULL;
+       for(i=0;i<k;i++)
+       { insert();
+         head1=head;
+          
+       }  display();
+        head=NULL;
+     }
+     void info::butters()
+     {
+      cout<<"enter no. of students who like butterscotch";
+       cin>>j;
+       for(i=0;i<j;i++)
+       { insert();
+         head2=head;
+        
+       } display();
+       head=NULL;
+     }
+      void info::uice()
+{    cout<<"students who like vanila or butterscotch\n";
+     temp1=head1;
+     while(temp1!=NULL)
+     {
+       node *p=new(struct node);
+       p->roll=temp1->roll;
+       p->next=NULL;     
+     if(head3==NULL)
+     {    head3=p;
+     }
+    else
+    {      temp3=head3;
+          while(temp3->next!=NULL)
+          {    temp3=temp3->next;   }
+              temp3->next=p;
+     }
+       
+       temp1=temp1->next;
+     }
+     temp2=head2;
+     while(temp2!=NULL)
+     {    f=0;
+         temp1=head1;
+         while(temp1!=NULL)
+         {
+         if(temp2->roll==temp1->roll)
+         { f=1;                   }
+          temp1=temp1->next;
+         } 
+       
+        
+    
+     if(f==0)
+     {  
+         node *p=new(struct node);
+       p->roll=temp2->roll;
+       p->next=NULL;     
+       if(head3==NULL)
+        {    head3=p;
+        }
+       else
+       {      temp3=head3;
+          while(temp3->next!=NULL)
+          {    temp3=temp3->next;   }
+              temp3->next=p;
+       }
+  }
+      temp2=temp2->next;     
+     }
+     temp3=head3;
+      while(temp3->next!=NULL)
+      { cout<<"\n"<<temp3->roll;
+        temp3=temp3->next;
+      } cout<<"\n"<<temp3->roll;
 }
-struct node * Set::difference(struct node *head1, struct node *head2)
-{
-	struct node *head3,*p,*q,*r;
-		struct node* New;
-		p=head1;
-		head3=NULL;
-		while(p!=NULL)
-		{
-			int flag=0;
-			q=head2;
-			while(q!=NULL)
 
-			{
-				if(strcmp(p->name,q->name)==0)
-				{
-					flag=1;
-					break;
-				}
-				else
-				{
-					q=q->next;
-				}
-			}
-			if(flag!=1)
-			{
-				if(head3==NULL)
-					{
-						New=new node;
-						strcpy(New->name,p->name);
-						r=New;
-						r->next=NULL;
-						head3=r;
-					}
-					else
-					{
-						New=new node;
-						r->next=New;
-						strcpy(New->name,p->name);
-						r=r->next;
-						r->next=NULL;
-					}
-			}
-			p=p->next;
-		}
-		return head3;
-}
-void Set::Intersection(struct node *head1, struct node *head2)
-{
-	struct node *head3,*p,*q,*r;
-	struct node* New;
-	p=head1;
-	head3=NULL;
-	q=head2;
-	while(p!=NULL)
-	{
-		
-		while(q!=NULL)
-		{
-			if(strcmp(p->name,q->name)==0)
-			{
-				if(head3==NULL)
-				{
-					//head3=r=p;
-					New=new node;
-					strcpy(New->name,p->name);
-					r=New;
-					r->next=NULL;
-					head3=r;
-				}
-				else
-				{
-					New=new node;
-					r->next=New;
-					strcpy(New->name,p->name);
-					r=r->next;
-					r->next=NULL;
-				}
-			}
-			q=q->next;
-		}
-		p=p->next;
-	}
-	display(head3);
-}
 
-struct node *Set::Union(struct node *head1,struct node *head2)
+void info::ovanila()
 {
-	struct node *head3,*p,*q,*r;
-	//p=head1;
-	q=head2;
-	head3=head1;
-	r=head3;
-	while(r->next!=NULL)
-	{
-		r=r->next;
-	}
-	while(q!=NULL)
-	{
-		p=head1;
-		int flag=0;
-		while(p!=NULL)
-		{
-			if(strcmp(p->name,q->name)==0)
-			{
-				flag=1;
-				break;
-			}
-			else
-				p=p->next;
-		}
-		if(flag==0)
-		{
-			struct node* New=new node;
-			r->next=New;
-			strcpy(New->name,q->name);
-			r=r->next;
-			r->next=NULL;
-		}
-		q=q->next;
-	}
-	return head3;
+       cout<<"\nstudents  like only vanila \n";
+       temp1=head1;
+       while(temp1!=NULL)
+       {  temp2=head2;
+          f=0;
+          while(temp2!=NULL)
+          {   if(temp1->roll==temp2->roll)
+              {  f=1;              }
+               temp2=temp2->next;
+          } 
+         
+          if(f==0)
+          { cout<<"\n"<<temp1->roll;    }
+             temp1=temp1->next;
+        }
+       
 }
-void Set::display(struct node *p)
+void info::obutters()
 {
-	if(p==NULL)
-	{
-		cout<<"\n This set is empty...";
-	}
-	else
-	{
-		cout<<"\n{";
-	while(p!=NULL)
-	{
-		cout<<p->name<<",";
-		p=p->next;
-	}cout<<"}"<<endl;}
+    cout<<"\nstudents like only butterscotch\n";
+        temp2=head2;
+       while(temp2!=NULL)
+       {  temp1=head1;
+          f=0;
+          while(temp1!=NULL)
+          {   if(temp2->roll==temp1->roll)
+              {  f=1;              }
+               temp1=temp1->next;
+          } 
+         
+          if(f==0)
+          { cout<<"\n"<<temp2->roll;    }
+             temp2=temp2->next;
+        }
+       
+            
 }
-struct node* Set::create(struct node *head)
+void info::nice()
 {
-	struct node *New,*p;
-	int ans;
-	do{
-	New = new node;
-	New->next=NULL;
-	cout<<"\n Enter name: ";
-	cin>>New->name;
-	if(head==NULL)
-	{
-		head=p=New;
-	}
-	else
-	{
-		p->next=New;
-		p=p->next;
-	}
-	cout<<"\n Want to add more names: ";
-	cin>>ans;
-	}while(ans==1);
-	return head;
+       cout<<"\nstudents who like both vanila and butterscotch\n";
+       temp1=head1;
+       while(temp1!=NULL)
+       { temp2=head2;
+         while(temp2!=NULL)
+         {  if(temp1->roll==temp2->roll)
+             { cout<<"\n"<<temp1->roll;   }
+              temp2=temp2->next;
+          }
+            
+            temp1=temp1->next;
+        }
+        
 }
+ void info::notice()
+ {
+
+    cout<<"\nstudents who like neither vanila nor butterscotch\n";
+    temp=h1;
+       while(temp!=NULL)
+       {  temp3=head3;
+          f=0;
+          while(temp3!=NULL)
+          {   if(temp->roll==temp3->roll)
+              {  f=1;              }
+               temp3=temp3->next;
+          } 
+         
+          if(f==0)
+          { cout<<"\n"<<temp->roll;    }
+             temp=temp->next;
+        }
+      
+}
+ 
 int main()
-{
-	Set s;
-	struct node *U,*d;
-	int ch,ans;
-	cout<<"\n Enter the main list of students: ";
-	s.head=s.create(s.head);
-	cout<<"\n Enter list of students who like vanilla";
-	s.head1=s.create(s.head1);
-	cout<<"\n Enter list of students who like butterscotch";
-	s.head2=s.create(s.head2);
-	cout<<"\n List of all students.\n";
-	s.display(s.head);
-	cout<<"\n List of students who like vanilla.\n";
-	s.display(s.head1);
-	cout<<"\n List of students who like butterscotch.\n";
-	s.display(s.head2);
-	do
-	{
-		cout<<"\n Options..";
-		cout<<"\n 1. Set of students who like either vanilla or butterscotch or both";
-		cout<<"\n 2. Set of students who like both vanilla and butterscotch";
-		cout<<"\n 3. Set of students who like only vanilla not butterscotch";
-		cout<<"\n 4. Set of students who like only butterscotch not vanilla";
-		cout<<"\n 5. Number of students who neither like vanilla nor butterscotch";
-		cout<<"\n Enter your choice: ";
-		cin>>ch;
-		switch(ch)
-		{
-		case 1:
-			cout<<"\n Set of students who like either vanilla or butterscotch or both ";
-			U=s.Union(s.head1,s.head2);
-			s.display(U);
-			break;
-		case 2:
-			cout<<"\n Set of students who like both vanilla and butterscotch";
-			s.Intersection(s.head1,s.head2);
-			break;
-		case 3:
-			cout<<"\n Set of students who like only vanilla not butterscotch";
-			d=s.difference(s.head1,s.head2);
-			s.display(d);
-			break;
-		case 4:
-			cout<<"\n Set of students who like only butterscotch not vanilla";
-			d=s.difference(s.head2,s.head1);
-			s.display(d);
-			break;
-		case 5:
-			cout<<"\n Number of students who neither like vanilla nor butterscotch: ";
-			d=s.difference(s.head,U);
-			cout<<s.count(d);
-		}
-		cout<<"\n Do you want to continue: ";
-		cin>>ans;
-	}while(ans==1);
-	return 0;
-}
+  { info s;
+  int i;
+   
+          char ch;
+       do{
+          cout<<"\n choice the options";
+          cout<<"\n  1. To enter all students rollno  ";
+          cout<<"\n  2. To enter the rollno of student who like vanila";
+          cout<<"\n  3.  To enter the rollno of student who like butterscotch";
+          cout<<"\n  4.  To display the rollno of student who like vanila or butterscotch";
+          cout<<"\n  5.  To display the rollno of student who like only vanila";
+          cout<<"\n  6.  To display the rollno of student who like only butterscotch";
+          cout<<"\n  7.  To display the rollno of student who like both vanila and butterscotch ";
+          cout<<"\n  8.  To display the rollno of student who neither like vanila nor butterscotch";
+        
+  
+          cin>>i;
+         switch(i)
+         {        case 1:   s.allstud();
+                                  break;
+         
+                 case 2:   s.vanila(); 
+                                  break;
+                  case 3: s.butters();
+                                  break;
+                  case 4:   s.uice();
+                                  break;
+                  case 5:   s.ovanila();
+                                  break;
+                  case 6:   s. obutters();
+                                  break;
+                  case 7:   s.nice(); 
+                                  break;
+                  case 8:   s.notice();
+                                  break;      
+                
+               
+                                        
+                  default:  cout<<"\n unknown choice";
+          }
+            cout<<"\n do you want to continue enter y/Y \n";
+            cin>>ch;
+       
+       }while(ch=='y'||ch=='Y');   
 
+return 0;
+}
