@@ -12,7 +12,7 @@ class sll
 {
 	public:
 		sll();
-		struct node*create();
+		struct node *create();
 		void display(struct node*);
 		void count();
 		void reverse(struct node*);
@@ -60,11 +60,11 @@ node *sll::create()
 		New->PRN=val;
 		strcpy(New->name,n);
 		New->next=NULL;
-		if(flag==TRUE)
+		if(flag==1)
 		{
 			head=New;
 			temp=head;
-			flag=FALSE;
+			flag=0;
 		}
 		else
 		{
