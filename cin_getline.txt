@@ -1,0 +1,2 @@
+1> if we use cin to take any input befor cin.getline the must use cin.ignore() berfore cin.getline
+2> coz when we use cin to take any input it write "\n" on input stream after taking input so cin.getline doest take any input coz of that
