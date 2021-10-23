@@ -1,3 +1,7 @@
+/*
+time complexity of linear search is O(n)
+best case is O(1)
+*/
 #include<iostream>
 #define max 100
 using namespace std;

@@ -21,21 +21,22 @@ int main()
 	low=0;
 	high=n-1;
 	mid=(low+high)/2;
-	for(i=0;i<n;i++)
+	while(low<=high)
 	{
 		if(s==arr[mid])
 		{
 			r=mid+1;
 			f=1;
+			break;
 		}
 		else if(s>arr[mid])
 		{
-			low=mid;
+			low=mid+1;
 			mid=(low+high)/2;
 		}
 		else if(s<arr[mid])
 		{
-			high=mid;
+			high=mid-1;
 			mid=(low+high)/2;
 		}
 	}
