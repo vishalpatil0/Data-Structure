@@ -1,9 +1,8 @@
 #include<iostream>
 using namespace std;
+int ok(){}
 int main()
 {
-    float a=2.9999f;
-    int b=a;
-    cout<<b<<endl;
+    cout<<ok()<<endl;
     return 0;
 }

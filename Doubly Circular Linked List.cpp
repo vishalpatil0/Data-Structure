@@ -6,6 +6,7 @@ using namespace std;
 typedef struct node{
     int data;
     node *next;
+    node *previous;
 }node;
 class LinkedList{
     node *head=NULL,*tail=NULL;
@@ -13,9 +14,10 @@ class LinkedList{
         LinkedList(){}
         LinkedList(int tpr)
         {
-            head=new node;
+            head=(node *)malloc(sizeof(node));
             head->data=tpr;
-            head->next=NULL;
+            head->next=head;
+            head->previous=head;
             tail=head;
         }
         void insert()
@@ -31,6 +33,9 @@ class LinkedList{
                 cout<<"Enter the data = ";
                 cin>>temp->data;
                 temp->next=head;
+                head->previous=temp;
+                temp->previous=tail;
+                tail->next=temp;
                 head=temp;
                 temp=NULL;
                 delete temp;
@@ -39,7 +44,9 @@ class LinkedList{
                 cout<<"Enter the data = ";
                 cin>>temp->data;
                 tail->next=temp;
-                temp->next=NULL;
+                temp->previous=tail;
+                head->previous=temp;
+                temp->next=head;
                 tail=temp;
                 temp=NULL;
                 delete temp;
@@ -53,10 +60,10 @@ class LinkedList{
                 node *travs;
                 travs=head;
                 count=1;
-                while(count!=pos)
+                while(count!=pos-1)
                 {
                     travs=travs->next;
-                    if(travs==NULL)
+                    if(travs==head)
                     {
                         cout<<"Position is beyond the element's range so element is going to inserted at last location "<<endl;
                         check=true;
@@ -66,13 +73,17 @@ class LinkedList{
                 }
                 if(check)
                 {
+                    temp->next=tail->next;
                     tail->next=temp;
-                    temp->next=NULL;
+                    temp->previous=tail;
+                    head->previous=temp;
                     tail=temp;
                 }
                 else
                 {
+                    travs->next->previous=temp;
                     temp->next=travs->next;
+                    temp->previous=travs;
                     travs->next=temp;
                 }
                 temp=NULL;
@@ -91,37 +102,52 @@ class LinkedList{
             if(j==head->data)
             {
                 node * capture=head;
+                head->next->previous=head->previous;
+                head->previous->next=head->next;
                 head=head->next;
+                capture->next,capture->previous=NULL;
                 delete capture;
             }
             else
             {
                 node *flow=head;
-                node *seek;
-                
-                while(flow!=NULL)
+                do
                 {
                     if(j==flow->data)
                     {
-                        seek->next=flow->next;
+                        flow->previous->next=flow->next;
+                        flow->next->previous=flow->previous;
+                        flow->next,flow->previous=NULL;
                         delete flow;
                         cout<<"\n\nElement deleted"<<endl;
                         break;
                     }
-                    seek=flow;
                     flow=flow->next;
-                }
+                }while(flow!=head);
             }
         }
         void display()
         {
             node *flow=head;
             cout<<"\n\nElements are as : \n"<<endl;
-            while(flow!=NULL)
+            do
             {
                 cout<<flow->data<<"->";
                 flow=flow->next;
-            }
+            }while(flow!=head);
+            cout<<endl<<endl;
+            flow=NULL;
+            free(flow);
+        }
+        void DisplayReverse()
+        {
+            node *flow=tail;
+            cout<<"\n\nElements are as : \n"<<endl;
+            do
+            {
+                cout<<flow->data<<"->";
+                flow=flow->previous;
+            }while(flow!=tail);
             cout<<endl<<endl;
             flow=NULL;
             free(flow);
@@ -129,21 +155,22 @@ class LinkedList{
         void reverse()
         {
             node *first=NULL,*last;
-            node *go=head;
+            node *flow=head;
             stack<int>s;
-            while(go!=NULL)
+            do
             {
-                s.push(go->data);
-                go=go->next;
-            }
-            go=head;
-            while(go!=NULL)
+                s.push(flow->data);
+                flow=flow->next;
+            }while(flow!=head);
+            flow=head;
+            do
             {
                if(first==NULL)
                {
                     node *tem=new node;
                     tem->data=s.top();
-                    tem->next=NULL;
+                    tem->next=tem;
+                    tem->previous=tem;
                     first=tem;
                     last=tem;
                     s.pop();
@@ -153,30 +180,19 @@ class LinkedList{
                else{
                     node *tem=new node;
                     tem->data=s.top();
-                    tem->next=NULL;
                     s.pop();
+                    tem->next=last->next;
+                    tem->previous=last;
                     last->next=tem;
                     last=tem;
+                    first->previous=last;
                     tem=NULL;
                     delete tem;
                }
-               go=go->next;
-            }
+               flow=flow->next;
+            }while(flow!=head);
             head=first;
             tail=last;
-            
-        }
-        void reverse_without_using_stack()
-        {
-            node *prev=NULL, *Next=NULL, *current=head;
-            while(current!=NULL)
-            {
-                Next=current->next;
-                current->next=prev;
-                prev=current;
-                current=Next;
-            }
-            head=prev;
         }
         void randomallocation()
         {
@@ -188,14 +204,16 @@ class LinkedList{
             {
                 node * temp=(node *)malloc(sizeof(node));
                 temp->data=rand()%100+1;
+                temp->next=tail->next;
                 tail->next=temp;
-                temp->next=NULL;
+                temp->previous=tail;
                 tail=temp;
                 length--;
                 temp=NULL;
                 delete temp;
             }
-            tail->next=NULL;
+            tail->next=head;
+            head->previous=tail;
         }
 };
 int main()
@@ -208,7 +226,7 @@ int main()
     delete data;
     while(true)
     {
-        cout<<"1-Insert\n2-Display\n3-Deletion\n4-Reverse\n5-Reverse without using stack\n6-Random Insertion\n7-Exit\n\nEnter your choice = ";
+        cout<<"1-Insert\n2-Display\n3-Display in Reverse Order \n4-Deletion\n5-Reverse\n6-Random Insertion\n7-Exit\n\nEnter your choice = ";
         cin>>choice;
         switch (choice)
         {
@@ -218,14 +236,14 @@ int main()
         case 2:
             list.display();
             break;
-        case 3:
-            list.deletion();
+        case 3: 
+            list.DisplayReverse();
             break;
         case 4:
-            list.reverse();
+            list.deletion();
             break;
-        case 5: 
-            list.reverse_without_using_stack();
+        case 5:
+            list.reverse();
             break;
         case 6:
             list.randomallocation();

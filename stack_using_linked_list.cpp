@@ -22,7 +22,7 @@ void display()
 	}
 	}
 }
-int push(int n)
+void push(int n)
 {
 	node *temp=new node;
 	temp->data=n;
@@ -43,13 +43,23 @@ void pop()
 	cout<<h<<" = element deleted"<<endl;
 	}
 }	
+int peek(int pos)
+{
+	node *flow=top;
+	while(pos!=1)
+	{
+		flow=flow->next;
+		pos--;
+	}
+	return flow->data;
+}
 int main()
 {
 	int ch,n;
 	char c;
 	do
 	{
-	cout<<"1-push\n2-pop\n3-display"<<"\nEnter your choice"<<endl;
+	cout<<"1-push\n2-pop\n3-display\n4-Peek"<<"\nEnter your choice"<<endl;
 	cin>>ch;
 	switch(ch)
 	{
@@ -64,6 +74,10 @@ int main()
 		case 3:
 			display();
 			break;
+		case 4:
+			cout<<"Enter the position of element = "<<endl;
+			cin>>ch;
+			cout<<"Element at "<<ch<<" is "<<peek(ch)<<endl;
 		default:
 			cout<<"Invalide choice"<<endl;
 			break;
