@@ -113,8 +113,7 @@ class LinkedList{
                 }
             }
         }
-        void display()
-        {
+        void display(){
             node *flow=head;
             cout<<"\n\nElements are as : \n"<<endl;
             while(flow!=NULL)
@@ -197,6 +196,18 @@ class LinkedList{
             }
             tail->next=NULL;
         }
+        void recursiveDisplay(node *trav)
+        {
+            cout<<trav->data<<"->";
+            if(trav->next!=NULL)
+            {
+                recursiveDisplay(trav->next);
+            }
+        }
+        void rdisplay()
+        {
+            recursiveDisplay(head);
+        }
 };
 int main()
 {
@@ -208,7 +219,7 @@ int main()
     delete data;
     while(true)
     {
-        cout<<"1-Insert\n2-Display\n3-Deletion\n4-Reverse\n5-Reverse without using stack\n6-Random Insertion\n7-Exit\n\nEnter your choice = ";
+        cout<<"\n1-Insert\n2-Display\n3-Recursive Display\n4-Deletion\n5-Reverse\n6-Reverse without using stack\n7-Random Insertion\n8-Exit\n\nEnter your choice = ";
         cin>>choice;
         switch (choice)
         {
@@ -216,21 +227,24 @@ int main()
             list.insert();
             break;
         case 2:
-            list.display();
+            list.rdisplay();
             break;
         case 3:
-            list.deletion();
+            list.display();
             break;
         case 4:
+            list.deletion();
+            break;
+        case 5:
             list.reverse();
             break;
-        case 5: 
+        case 6: 
             list.reverse_without_using_stack();
             break;
-        case 6:
+        case 7:
             list.randomallocation();
             break;
-        case 7:
+        case 8:
             exit(0);
         default:
             cout<<"Please enter a valid choice"<<endl;
