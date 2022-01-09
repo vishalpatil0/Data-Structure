@@ -20,7 +20,7 @@ int main()
 	cin>>s;
 	low=0;
 	high=n-1;
-	mid=(low+high)/2;
+	mid=low+((high-low)/2);
 	while(low<=high)
 	{
 		if(s==arr[mid])
@@ -32,12 +32,12 @@ int main()
 		else if(s>arr[mid])
 		{
 			low=mid+1;
-			mid=(low+high)/2;
+			mid=low+((high-low)/2);
 		}
 		else if(s<arr[mid])
 		{
 			high=mid-1;
-			mid=(low+high)/2;
+			mid=low+((high-low)/2);
 		}
 	}
 	if(f==1)

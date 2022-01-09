@@ -121,13 +121,13 @@ int main()
     cout<<"Enter the size of the array = ";
     int n;
     cin>>n;
-    CountSort<int>bs(n);
+    CountSort<char>bs(n);
     bs.insertElements();
     cout<<"Sorted or not -> "<<bs.isSortedforAsscending()<<endl<<endl;
     cout<<"Before sorting are is as follow :"<<endl<<endl;
     bs.print();
     cout<<endl<<endl;
-    bs.descendingSort();
+    bs.asscendingSort();
     cout<<"After sorting are is as follow :"<<endl<<endl;
     bs.print();
     cout<<endl<<endl;

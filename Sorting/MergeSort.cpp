@@ -9,6 +9,7 @@
 */
 #include<iostream>
 #include<stdlib.h>
+#include<time.h>
 using namespace std;
 template<class T>
 class MergeSort
@@ -59,9 +60,17 @@ class MergeSort
             }
             return true;
         }
+        void random_insertion()
+        {
+            srand(time(0));
+            for (int i = 0; i < length; i++)
+            {
+                arr[i]=rand()%88+10;
+            }
+        }
         void A_merge(int low,int mid,int high)
         {
-            int i=low,j=mid+1,k=low,tarr[high-low+1];
+            int i=low,j=mid+1,k=0,tarr[high-low+1];
             while(i<=mid && j<=high)
             {
                 if(arr[i]<arr[j])
@@ -81,9 +90,9 @@ class MergeSort
             {
                 tarr[k++]=arr[j++];
             }
-            for (int i = low; i <=high; i++)
+            for (int i = low,j=0; i <=high; i++,j++)
             {
-                arr[i]=tarr[i];
+                arr[i]=tarr[j];
             }    
         }
         void sortA(int low,int high)
@@ -102,7 +111,7 @@ class MergeSort
         }
         void D_merge(int low,int mid,int high)
         {
-            int i=low,j=mid+1,k=low,tarr[high-low+1];
+            int i=low,j=mid+1,k=0,tarr[high-low+1];
             while(i<=mid && j<=high)
             {
                 if(arr[i]>arr[j])
@@ -122,9 +131,9 @@ class MergeSort
             {
                 tarr[k++]=arr[j++];
             }
-            for (int i = low; i <=high; i++)
+            for (int i = low,j=0; i <=high; i++,j++)
             {
-                arr[i]=tarr[i];
+                arr[i]=tarr[j];
             }    
         }
         void sortD(int low,int high)
@@ -149,12 +158,16 @@ int main()
     int n;
     cin>>n;
     MergeSort<int>bs(n);
-    bs.insertElements();
+    cout<<"1-Manual insertion\n2-Random insertion\n\nEnter your choice = ";
+    int ch;
+    cin>>ch;
+    if(ch==1)  bs.insertElements();
+    else       bs.random_insertion(); 
     cout<<"\nSorted or not -> "<<bs.isSortedforAsscending()<<endl<<endl;
     cout<<"Before sorting array is as follow :"<<endl<<endl;
     bs.print();
     cout<<endl<<endl;
-    bs.descendingSort();
+    bs.ascendingSort();
     cout<<"After sorting array is as follow :"<<endl<<endl;
     bs.print();
     cout<<endl<<endl;
